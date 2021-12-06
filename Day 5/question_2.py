@@ -34,7 +34,7 @@ def read_file(filename: str) -> list:
 
 
 if __name__ == '__main__':
-    coordinates, x, y = read_file('test_input.txt')
+    coordinates, x, y = read_file('input.txt')
     points_dict = defaultdict(lambda: 0)
     
 
@@ -61,13 +61,22 @@ if __name__ == '__main__':
                 end = y_2 if y_2 > y_1 else y_1
                 for i in range(start, end+1):
                     points_dict[(x_1, i)] += 1
-        else:
-
-            if x_1 == y_1 and x_2 == y_2:
-                for i in range(x_1, x_2+1):
-                    points_dict[(i,i)] += 1
-
-            else:
+        else:  # diagonal
+                diagonal_counter = abs(x_1-x_2)+1
+                if x_1 < x_2:
+                    if y_1 < y_2:
+                        for i in range(0, diagonal_counter):
+                            points_dict[(x_1+i, y_1+i)] += 1
+                    else:
+                        for i in range(0, diagonal_counter):
+                            points_dict[(x_1+i, y_1-i)] += 1
+                else:
+                    if y_1 < y_2:
+                        for i in range(0, diagonal_counter):
+                            points_dict[(x_1-i, y_1+i)] += 1
+                    else:
+                        for i in range(0, diagonal_counter):
+                            points_dict[(x_1-i, y_1-i)] += 1
                 
         
     
