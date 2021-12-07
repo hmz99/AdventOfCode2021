@@ -20,6 +20,7 @@ if __name__ == '__main__':
     initial_positions = read_file('input.txt')
     initial_positions = sorted(initial_positions)
     initial_position_map = defaultdict(lambda: 0)
+    step_cost_cache = {n: step_cost(n) for n in range(0, initial_positions[-1]+1)}
 
     fuel_map = defaultdict(lambda: 0)
 
@@ -28,7 +29,7 @@ if __name__ == '__main__':
 
     for x in range(0, initial_positions[-1]):
         for j in set(initial_positions):
-            fuel_map[x] += step_cost(abs(x-j)) * initial_position_map[j]
+            fuel_map[x] += step_cost_cache[abs(x-j)] * initial_position_map[j]
 
     min_index = min(fuel_map, key=fuel_map.get)
     print(fuel_map[min_index])
